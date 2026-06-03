@@ -1,22 +1,24 @@
 /* ===== Design tokens ===== */
 :root {
-  --green-900: #14361f;
-  --green-700: #1f6b3a;
-  --green-600: #248a47;
-  --green-500: #2faa57;
-  --green-50:  #eaf6ee;
-  --amber:     #f2a900;
-  --amber-dark:#d68f00;
-  --ink:       #1c2b22;
-  --muted:     #5b6b62;
-  --line:      #e3eae5;
+  /* Brand palette: navy + red + white (from the Horenshteine logo) */
+  --green-900: #0e2348;  /* deep navy */
+  --green-700: #16386e;  /* navy */
+  --green-600: #d81f26;  /* primary red (actions) */
+  --green-500: #e63a40;  /* lighter red */
+  --green-50:  #fdebec;  /* light red tint */
+  --amber:     #ff5a5f;  /* bright red accent on dark backgrounds */
+  --amber-dark:#b81820;  /* dark red */
+  --navy-50:   #eaf0fa;  /* light navy tint */
+  --ink:       #1b2540;
+  --muted:     #5a6478;
+  --line:      #e2e7f0;
   --bg:        #ffffff;
-  --bg-alt:    #f5f9f6;
+  --bg-alt:    #f5f7fc;
   --white:     #ffffff;
   --radius:    16px;
   --radius-sm: 10px;
-  --shadow:    0 10px 30px rgba(20, 54, 31, .08);
-  --shadow-lg: 0 20px 50px rgba(20, 54, 31, .14);
+  --shadow:    0 10px 30px rgba(14, 35, 72, .10);
+  --shadow-lg: 0 20px 50px rgba(14, 35, 72, .16);
   --max:       1140px;
 }
 
@@ -51,7 +53,7 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
   text-align: center;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-primary { background: var(--green-600); color: #fff; box-shadow: 0 8px 20px rgba(36,138,71,.3); }
+.btn-primary { background: var(--green-600); color: #fff; box-shadow: 0 8px 20px rgba(216,31,38,.32); }
 .btn-primary:hover { background: var(--green-700); }
 .btn-ghost { background: transparent; color: var(--green-700); border-color: var(--green-500); }
 .btn-ghost:hover { background: var(--green-50); }
@@ -77,6 +79,7 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
   display: grid; place-items: center;
   box-shadow: 0 6px 14px rgba(36,138,71,.3);
 }
+.logo-img { width: 52px; height: 52px; border-radius: 50%; display: block; }
 .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
 .logo-text strong { font-size: 20px; color: var(--green-900); }
 .logo-text small { font-size: 12px; color: var(--muted); }
@@ -100,17 +103,17 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
 .hero {
   position: relative;
   background:
-    linear-gradient(110deg, rgba(15,40,23,.94) 0%, rgba(20,54,31,.86) 45%, rgba(20,54,31,.62) 100%),
+    linear-gradient(110deg, rgba(11,28,60,.95) 0%, rgba(14,35,72,.88) 45%, rgba(22,56,110,.66) 100%),
     url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80") center/cover no-repeat;
-  background-color: #14361f;
+  background-color: #0e2348;
   color: #fff;
   padding: 90px 0 130px;
   overflow: hidden;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 15% 30%, rgba(47,170,87,.22), transparent 40%),
-                    radial-gradient(circle at 85% 70%, rgba(242,169,0,.16), transparent 45%);
+  background-image: radial-gradient(circle at 15% 30%, rgba(216,31,38,.20), transparent 40%),
+                    radial-gradient(circle at 85% 70%, rgba(22,56,110,.30), transparent 45%);
 }
 .hero-inner { position: relative; }
 .hero-content { max-width: 720px; }
@@ -197,7 +200,7 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
 .cta-banner {
   position: relative;
   background:
-    linear-gradient(120deg, rgba(20,54,31,.92), rgba(31,107,58,.82)),
+    linear-gradient(120deg, rgba(11,28,60,.93), rgba(22,56,110,.84)),
     url("https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=1920&q=80") center/cover no-repeat;
   background-color: var(--green-900);
   padding: 64px 0;
@@ -241,6 +244,7 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
 .site-footer { background: var(--green-900); color: rgba(255,255,255,.8); padding: 50px 0 30px; }
 .footer-inner { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
 .footer-brand { display: flex; align-items: center; gap: 12px; }
+.footer-brand .logo-img { width: 46px; height: 46px; }
 .footer-brand strong { display: block; color: #fff; font-size: 18px; }
 .footer-brand small { color: rgba(255,255,255,.6); font-size: 12px; }
 .footer-nav { display: flex; gap: 24px; flex-wrap: wrap; }
