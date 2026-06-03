@@ -57,6 +57,9 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
 .btn-primary:hover { background: var(--green-700); }
 .btn-ghost { background: transparent; color: var(--green-700); border-color: var(--green-500); }
 .btn-ghost:hover { background: var(--green-50); }
+/* Ghost button sits on the dark hero — keep it light for contrast */
+.hero .btn-ghost { color: #fff; border-color: rgba(255,255,255,.65); }
+.hero .btn-ghost:hover { background: rgba(255,255,255,.14); border-color: #fff; }
 .btn-light { background: #fff; color: var(--green-700); }
 .btn-light:hover { background: #f0f0f0; }
 .btn-whatsapp { background: var(--green-700); color: #fff; box-shadow: 0 8px 20px rgba(22,56,110,.3); }
