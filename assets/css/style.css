@@ -73,8 +73,16 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-.header-inner { display: flex; align-items: center; justify-content: space-between; height: 74px; }
-.logo { display: flex; align-items: center; gap: 12px; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 84px; }
+/* Logo placed on the LEFT side of the header */
+.logo { display: flex; flex-direction: column; align-items: center; gap: 4px; order: 2; }
+.logo-img { width: 58px; height: 58px; border-radius: 50%; display: block; }
+.logo-caption {
+  color: var(--green-600); /* red */
+  font-weight: 800; font-size: 12.5px; line-height: 1.25; text-align: center;
+}
+.main-nav { order: 1; }
+.nav-toggle { order: 1; }
 .logo-mark {
   width: 44px; height: 44px; border-radius: 12px;
   background: linear-gradient(135deg, var(--green-600), var(--green-500));

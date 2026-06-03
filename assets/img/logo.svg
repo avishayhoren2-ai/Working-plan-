@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="הורנשטיין">
+  <defs>
+    <clipPath id="c"><circle cx="160" cy="160" r="155"/></clipPath>
+  </defs>
+
+  <!-- Red disc -->
+  <circle cx="160" cy="160" r="155" fill="#e8261d"/>
+
+  <g clip-path="url(#c)">
+    <!-- White S -->
+    <text x="160" y="240" text-anchor="middle"
+          font-family="Arial, Helvetica, sans-serif" font-weight="900"
+          font-size="265" fill="#ffffff">S</text>
+
+    <!-- Navy banner -->
+    <rect x="-2" y="135" width="324" height="52" fill="#163a72"/>
+
+    <!-- Brand name on the banner -->
+    <text x="160" y="172" text-anchor="middle"
+          font-family="Arial, Helvetica, sans-serif" font-weight="800"
+          font-size="33" letter-spacing="1" fill="#e8261d">HORENSHTEINE</text>
+  </g>
+
+  <!-- Outline ring -->
+  <circle cx="160" cy="160" r="153" fill="none" stroke="#c01a14" stroke-width="4"/>
+</svg>
