@@ -99,15 +99,18 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
 /* ===== Hero ===== */
 .hero {
   position: relative;
-  background: radial-gradient(120% 120% at 100% 0%, #1f6b3a 0%, #14361f 55%, #0f2817 100%);
+  background:
+    linear-gradient(110deg, rgba(15,40,23,.94) 0%, rgba(20,54,31,.86) 45%, rgba(20,54,31,.62) 100%),
+    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80") center/cover no-repeat;
+  background-color: #14361f;
   color: #fff;
   padding: 90px 0 130px;
   overflow: hidden;
 }
 .hero::before {
   content: ""; position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 15% 30%, rgba(47,170,87,.25), transparent 40%),
-                    radial-gradient(circle at 85% 70%, rgba(242,169,0,.18), transparent 45%);
+  background-image: radial-gradient(circle at 15% 30%, rgba(47,170,87,.22), transparent 40%),
+                    radial-gradient(circle at 85% 70%, rgba(242,169,0,.16), transparent 45%);
 }
 .hero-inner { position: relative; }
 .hero-content { max-width: 720px; }
@@ -192,12 +195,16 @@ h1, h2, h3 { line-height: 1.2; font-weight: 800; color: var(--green-900); }
 
 /* ===== CTA banner ===== */
 .cta-banner {
-  background: linear-gradient(120deg, var(--amber), var(--amber-dark));
-  padding: 56px 0;
+  position: relative;
+  background:
+    linear-gradient(120deg, rgba(20,54,31,.92), rgba(31,107,58,.82)),
+    url("https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=1920&q=80") center/cover no-repeat;
+  background-color: var(--green-900);
+  padding: 64px 0;
 }
-.cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
-.cta-banner h2 { color: #3a2a00; font-size: clamp(24px, 3.5vw, 34px); }
-.cta-banner p { color: #5a4400; font-size: 18px; margin-top: 6px; }
+.cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; position: relative; }
+.cta-banner h2 { color: #fff; font-size: clamp(24px, 3.5vw, 34px); }
+.cta-banner p { color: rgba(255,255,255,.85); font-size: 18px; margin-top: 6px; }
 
 /* ===== Contact ===== */
 .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: start; }
