@@ -118,6 +118,27 @@ export default function FlameFit() {
   const [detail, setDetail] = useState<Workout | null>(null);
   const [playing, setPlaying] = useState<Workout | null>(null);
   const [, force] = useState(0); // לרענון סטטיסטיקות
+
+  // —— התקנה למסך הבית (PWA) ——
+  const [deferred, setDeferred] = useState<any>(null);
+  const [showIOS, setShowIOS] = useState(false);
+  const isIOS = typeof navigator !== "undefined" && /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = typeof window !== "undefined" &&
+    (window.matchMedia?.("(display-mode: standalone)").matches || (navigator as any).standalone);
+  const [installed, setInstalled] = useState<boolean>(!!isStandalone);
+  useEffect(() => {
+    const onPrompt = (e: any) => { e.preventDefault(); setDeferred(e); };
+    const onInstalled = () => { setInstalled(true); setDeferred(null); };
+    window.addEventListener("beforeinstallprompt", onPrompt);
+    window.addEventListener("appinstalled", onInstalled);
+    return () => { window.removeEventListener("beforeinstallprompt", onPrompt); window.removeEventListener("appinstalled", onInstalled); };
+  }, []);
+  const installApp = async () => {
+    if (deferred) { deferred.prompt(); const r = await deferred.userChoice; if (r?.outcome === "accepted") setInstalled(true); setDeferred(null); }
+    else setShowIOS(true); // אייפון או דפדפן ללא prompt → הצג הוראות
+  };
+  const canShowInstall = !installed; // הסתר אם כבר מותקן
+
   const todayIdx = new Date().getDay();
   const todayW = WEEK[todayIdx].w ? WORKOUTS[WEEK[todayIdx].w!] : null;
   const done = getProg().log?.[todayKey()] || [];
@@ -137,6 +158,13 @@ export default function FlameFit() {
               <span className="text-[11px] text-[#93a1b5]">HIIT לשריפת שומן · בטוח לברך</span>
             </div>
           </div>
+          {canShowInstall && (
+            <button onClick={installApp}
+              className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-bold text-[#0a0d12]"
+              style={{ background: "linear-gradient(135deg,#a3e635,#22d3ee)", boxShadow: "0 6px 18px rgba(163,230,53,.35)" }}>
+              ⬇️ התקן
+            </button>
+          )}
         </header>
 
         {/* ===== בית ===== */}
@@ -164,6 +192,21 @@ export default function FlameFit() {
                 </>
               )}
             </section>
+
+            {/* באנר התקנה למסך הבית */}
+            {canShowInstall && (
+              <button onClick={installApp}
+                className="w-full flex items-center gap-3 rounded-2xl p-3.5 mb-3.5 text-right border active:scale-[.99] transition"
+                style={{ background: "linear-gradient(135deg,rgba(163,230,53,.14),rgba(34,211,238,.08))", borderColor: "rgba(163,230,53,.35)" }}>
+                <span className="text-2xl">📲</span>
+                <span className="flex-1">
+                  <b className="block text-sm font-extrabold">הוסף את FlameFit למסך הבית</b>
+                  <span className="text-[11px] text-[#93a1b5]">פתיחה מהירה במסך מלא · עובד גם בלי אינטרנט</span>
+                </span>
+                <span className="text-xs font-bold text-[#0a0d12] rounded-full px-3 py-1.5 shrink-0"
+                  style={{ background: "linear-gradient(135deg,#a3e635,#22d3ee)" }}>התקן</span>
+              </button>
+            )}
 
             {/* סטטיסטיקה */}
             <div className="grid grid-cols-3 gap-2.5">
@@ -266,6 +309,38 @@ export default function FlameFit() {
 
       {/* ===== נגן ===== */}
       {playing && <Player w={playing} onClose={() => { setPlaying(null); setDetail(null); force((n) => n + 1); }} />}
+
+      {/* ===== חלון הוראות התקנה (אייפון / דפדפן ללא prompt) ===== */}
+      {showIOS && (
+        <div onClick={() => setShowIOS(false)}
+          className="fixed inset-0 z-[70] flex items-end justify-center p-4"
+          style={{ background: "rgba(0,0,0,.6)", backdropFilter: "blur(4px)" }}>
+          <div onClick={(ev) => ev.stopPropagation()}
+            className="w-full max-w-[460px] bg-[#161c27] border border-[#263041] rounded-3xl p-5 animate-[fade_.3s_ease]">
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="w-10 h-10 rounded-xl grid place-items-center text-xl" style={{ background: "linear-gradient(135deg,#a3e635,#22d3ee)" }}>📲</div>
+              <h3 className="text-base font-extrabold flex-1">הוספה למסך הבית</h3>
+              <button onClick={() => setShowIOS(false)} className="text-2xl text-[#93a1b5] leading-none">✕</button>
+            </div>
+            {isIOS ? (
+              <ol className="space-y-2.5 text-sm">
+                <li className="flex gap-2.5"><span className="w-6 h-6 rounded-lg bg-[#1c2433] grid place-items-center text-[#a3e635] font-bold text-xs shrink-0">1</span>לחץ על כפתור השיתוף <b>⬆️</b> בתחתית Safari</li>
+                <li className="flex gap-2.5"><span className="w-6 h-6 rounded-lg bg-[#1c2433] grid place-items-center text-[#a3e635] font-bold text-xs shrink-0">2</span>גלול ובחר <b>"הוסף למסך הבית"</b> (Add to Home Screen)</li>
+                <li className="flex gap-2.5"><span className="w-6 h-6 rounded-lg bg-[#1c2433] grid place-items-center text-[#a3e635] font-bold text-xs shrink-0">3</span>לחץ <b>"הוסף"</b> — והאפליקציה תופיע במסך הבית 🔥</li>
+              </ol>
+            ) : (
+              <ol className="space-y-2.5 text-sm">
+                <li className="flex gap-2.5"><span className="w-6 h-6 rounded-lg bg-[#1c2433] grid place-items-center text-[#a3e635] font-bold text-xs shrink-0">1</span>פתח את תפריט הדפדפן <b>⋮</b> (שלוש נקודות)</li>
+                <li className="flex gap-2.5"><span className="w-6 h-6 rounded-lg bg-[#1c2433] grid place-items-center text-[#a3e635] font-bold text-xs shrink-0">2</span>בחר <b>"הוסף למסך הבית"</b> / "התקן אפליקציה"</li>
+                <li className="flex gap-2.5"><span className="w-6 h-6 rounded-lg bg-[#1c2433] grid place-items-center text-[#a3e635] font-bold text-xs shrink-0">3</span>אשר — והאפליקציה תיפתח כמו אפליקציה רגילה 🔥</li>
+              </ol>
+            )}
+            <button onClick={() => setShowIOS(false)}
+              className="w-full mt-5 rounded-2xl py-3.5 font-extrabold text-[#0a0d12]"
+              style={{ background: "linear-gradient(135deg,#a3e635,#22d3ee)" }}>הבנתי</button>
+          </div>
+        </div>
+      )}
 
       <style>{`@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}`}</style>
     </div>
