@@ -1,19 +1,20 @@
-/* ========= עיצוב אפליקציית HIIT — מודרני, כהה, אנרגטי ========= */
+/* ========= עיצוב אפליקציית HIIT — מודרני, בהיר, אנרגטי ========= */
 :root {
-  --bg: #0a0d12;
-  --bg-2: #11161f;
-  --card: #161c27;
-  --card-2: #1c2433;
-  --line: #263041;
-  --txt: #eef2f7;
-  --muted: #93a1b5;
-  --lime: #a3e635;
+  --bg: #eaeef6;
+  --bg-2: #f1f5f9;
+  --card: #ffffff;
+  --card-2: #f1f5f9;
+  --line: #e2e8f0;
+  --txt: #0f172a;
+  --muted: #64748b;
+  --lime: #4d7c0f;
   --lime-d: #84cc16;
-  --orange: #ff6b35;
-  --cyan: #22d3ee;
-  --grad: linear-gradient(135deg, #a3e635 0%, #22d3ee 100%);
-  --grad-warm: linear-gradient(135deg, #ff6b35 0%, #f7b733 100%);
-  --shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  --orange: #ea580c;
+  --cyan: #0891b2;
+  --grad: linear-gradient(135deg, #84cc16 0%, #06b6d4 100%);
+  --grad-text: linear-gradient(135deg, #16a34a 0%, #0891b2 100%);
+  --grad-warm: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+  --shadow: 0 12px 30px rgba(15, 23, 42, 0.10);
   --r: 20px;
   --safe: env(safe-area-inset-bottom, 0px);
 }
@@ -23,8 +24,8 @@ html { scroll-behavior: smooth; }
 body {
   font-family: "Heebo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   background:
-    radial-gradient(1100px 500px at 100% -10%, rgba(163, 230, 53, 0.10), transparent 60%),
-    radial-gradient(900px 500px at 0% 0%, rgba(34, 211, 238, 0.08), transparent 55%),
+    radial-gradient(1100px 500px at 100% -10%, rgba(132, 204, 22, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 0% 0%, rgba(6, 182, 212, 0.14), transparent 55%),
     var(--bg);
   color: var(--txt);
   direction: rtl;
@@ -68,7 +69,7 @@ body {
 .hero {
   position: relative; overflow: hidden;
   border-radius: 24px; padding: 22px; margin-bottom: 18px;
-  background: linear-gradient(150deg, #16202b, #11161f);
+  background: linear-gradient(150deg, #ffffff, #eef3fa);
   border: 1px solid var(--line); box-shadow: var(--shadow);
 }
 .hero::after {
@@ -145,7 +146,7 @@ body {
   background: var(--card); border: 1px solid var(--line);
   border-radius: 16px; padding: 14px 10px; text-align: center;
 }
-.stat b { font-size: 22px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat b { font-size: 22px; font-weight: 800; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .stat span { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 /* ===== טיפ ===== */
@@ -201,7 +202,7 @@ body {
 /* ===== מסך פרטי אימון (preview) ===== */
 .detail-head { border-radius: 22px; padding: 22px; margin-bottom: 16px; position: relative; overflow: hidden; border: 1px solid var(--line); }
 .detail-head h2 { font-size: 24px; font-weight: 800; }
-.detail-head p { color: rgba(255,255,255,0.85); font-size: 13px; margin-top: 4px; }
+.detail-head p { color: rgba(15,23,42,0.75); font-size: 13px; margin-top: 4px; }
 .detail-head .dmeta { display: flex; gap: 16px; margin-top: 14px; }
 .detail-head .dmeta div { font-size: 12px; }
 .detail-head .dmeta b { font-size: 18px; display: block; }
@@ -226,7 +227,7 @@ body {
 /* ===== ניווט תחתון ===== */
 .tabbar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-  background: rgba(13, 17, 24, 0.92); backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(14px);
   border-top: 1px solid var(--line);
   display: flex; justify-content: space-around;
   padding: 8px 0 calc(8px + var(--safe));
