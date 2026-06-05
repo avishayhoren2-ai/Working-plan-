@@ -137,6 +137,10 @@ export default function FlameFit() {
     if (deferred) { deferred.prompt(); const r = await deferred.userChoice; if (r?.outcome === "accepted") setInstalled(true); setDeferred(null); }
     else setShowIOS(true); // אייפון או דפדפן ללא prompt → הצג הוראות
   };
+  // רישום Service Worker (מאפשר התקנה + עבודה לא-מקוונת) — דורש /sw.js ב-public/
+  useEffect(() => {
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/sw.js").catch(() => {});
+  }, []);
   const canShowInstall = !installed; // הסתר אם כבר מותקן
 
   const todayIdx = new Date().getDay();
