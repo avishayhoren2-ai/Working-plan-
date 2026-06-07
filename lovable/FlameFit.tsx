@@ -30,6 +30,12 @@ const EX: Record<string, Ex> = {
   fastHands: { name: "קצב ידיים מהיר", desc: "בעמידה יציבה, מהלומות ידיים מהירות מאוד למטה (כמו תיפוף) להעלאת דופק בלי מאמץ על הברך.", cues: "רגליים נייחות · להתפוצץ במהירות הידיים" },
   standingOblique: { name: "כיפופי צד בעמידה", desc: "מרפק יורד לכיוון מותן ומושך ברך הצידה בעדינות לסירוגין — חיטוב מותניים בקצב.", cues: "טווח קטן ונוח · ליבה עובדת" },
   wallPush: { name: "דחיפות קיר נפיצות", desc: "עמידה בנטייה מול הקיר, דחיפות מהירות ונפיצות החוצה. מעלה דופק ומפעיל פלג עליון.", cues: "ליבה אסופה · קצב מהיר ושליטה" },
+  renegadeRow: { name: "חתירת רנגייד (פלאנק + משיכה)", desc: "בעמדת פלאנק על שתי משקולות, מושכים משקולת אחת לכל צד לסירוגין. תרגיל כוח אינטנסיבי לכל הגוף.", cues: "אגן יציב · בלי סיבוב · ליבה נעולה · רגליים רחבות" },
+  rdl: { name: "דדליפט רומני (RDL) עם משקולות", desc: "ברכיים רכות וקבועות, הטיית אגן אחורה והורדת משקולות לאורך הרגליים, וחזרה בסחיטת ישבן. עוצמתי לשרשרת האחורית — בלי כיפוף ברך.", cues: "הברך לא נעה · גב ישר · התנועה מהאגן" },
+  uprightRow: { name: "חתירה אנכית (Upright Row)", desc: "משקולות לפני הגוף, מושכים כלפי מעלה עד גובה החזה כשהמרפקים מובילים. מפעיל כתפיים וגב עליון בעצימות.", cues: "מרפקים מעל פרקי כף היד · תנועה מבוקרת" },
+  plankShoulderTap: { name: "פלאנק + נגיעת כתף", desc: "בפלאנק יציב, נוגעים לסירוגין ביד בכתף הנגדית בלי לנענע את האגן. מחזק ליבה וכתפיים בעצימות.", cues: "אגן יציב · רגליים רחבות לייצוב · קצב מבוקר" },
+  superman: { name: "סופרמן (הרמת גב)", desc: "שכיבה על הבטן, מרימים ידיים ורגליים ישרות מהרצפה וסוחטים את הגב והישבן.", cues: "מבט לרצפה · סחיטה בשיא · בלי כאב בגב" },
+  flutterKick: { name: "בעיטות פרפר (Flutter Kicks)", desc: "שכיבה על הגב, רגליים ישרות מעט מעל הרצפה, בעיטות קטנות ומהירות לסירוגין. שורף בטן תחתונה.", cues: "גב תחתון צמוד לרצפה · ידיים מתחת לישבן לתמיכה" },
   chestStretch: { name: "מתיחת חזה וכתפיים", desc: "פתיחת ידיים לצדדים/אחיזה מאחורי הגב למתיחת חזה.", cues: "נשימות עמוקות · בלי כאב" },
   catCow: { name: "חתול-פרה (גב)", desc: "על ארבע, מקמרים ומעגלים את הגב לסירוגין לשחרור עמוד שדרה.", cues: "תנועה רכה עם הנשימה" },
   hamstringStretch: { name: "מתיחת ירך אחורית (בישיבה)", desc: "ישיבה, רגל ישרה (בלי לנעול ברך בכוח), נשענים קדימה בעדינות.", cues: "גב ישר · מתיחה נוחה ולא כואבת" },
@@ -40,15 +46,16 @@ type Workout = { id: string; title: string; subtitle: string; color: string; ico
 const blk = (keys: string[], work: number, rest: number): Interval[] => keys.map((ex) => ({ ex, work, rest }));
 
 const WORKOUTS: Record<string, Workout> = {
-  upper: { id: "upper", title: "HIIT פלג גוף עליון", subtitle: "דחיפה · משיכה · ליבה", color: "#a3e635", icon: "💪", rounds: 3, estMin: 28, warmup: ["armCircles", "marchInPlace", "hipHinge"], intervals: blk(["pushUp", "bentRow", "shoulderPress", "boxing", "plank"], 40, 20), cooldown: ["chestStretch", "catCow"] },
-  metabolic: { id: "metabolic", title: "HIIT מטבולי לשריפה", subtitle: "דופק גבוה · עומס נמוך על הברך", color: "#ff6b35", icon: "🔥", rounds: 4, estMin: 26, warmup: ["marchInPlace", "armCircles", "hipHinge"], intervals: blk(["boxing", "wallPush", "standingPunchKnee", "fastHands"], 30, 15), cooldown: ["chestStretch", "hamstringStretch"] },
-  core: { id: "core", title: "HIIT ליבה ויציבה", subtitle: "בטן · גב · ישבן", color: "#22d3ee", icon: "🎯", rounds: 3, estMin: 24, warmup: ["catCow", "birdDog", "marchInPlace"], intervals: blk(["plank", "deadBug", "gluteBridge", "sidePlank", "standingOblique"], 35, 20), cooldown: ["catCow", "hamstringStretch"] },
-  fullbody: { id: "fullbody", title: "HIIT גוף מלא", subtitle: "כוח + דופק משולב", color: "#c084fc", icon: "⚡", rounds: 3, estMin: 30, warmup: ["marchInPlace", "armCircles", "hipHinge"], intervals: blk(["pushUp", "boxing", "bentRow", "gluteBridge", "shoulderPress", "wallPush"], 40, 20), cooldown: ["chestStretch", "catCow", "hamstringStretch"] },
+  upper: { id: "upper", title: "HIIT פלג גוף עליון", subtitle: "דחיפה · משיכה · ליבה", color: "#a3e635", icon: "💪", rounds: 4, estMin: 36, warmup: ["armCircles", "marchInPlace", "hipHinge"], intervals: blk(["pushUp", "bentRow", "shoulderPress", "renegadeRow", "uprightRow", "boxing", "plank"], 45, 15), cooldown: ["chestStretch", "catCow"] },
+  metabolic: { id: "metabolic", title: "HIIT מטבולי לשריפה", subtitle: "דופק גבוה · עומס נמוך על הברך", color: "#ff6b35", icon: "🔥", rounds: 5, estMin: 32, warmup: ["marchInPlace", "armCircles", "hipHinge"], intervals: blk(["boxing", "wallPush", "standingPunchKnee", "fastHands", "standingOblique"], 35, 15), cooldown: ["chestStretch", "hamstringStretch"] },
+  core: { id: "core", title: "HIIT ליבה ויציבה", subtitle: "בטן · גב · ישבן", color: "#22d3ee", icon: "🎯", rounds: 4, estMin: 30, warmup: ["catCow", "birdDog", "marchInPlace"], intervals: blk(["plank", "deadBug", "gluteBridge", "plankShoulderTap", "flutterKick", "superman", "sidePlank"], 40, 15), cooldown: ["catCow", "hamstringStretch"] },
+  fullbody: { id: "fullbody", title: "HIIT גוף מלא", subtitle: "כוח + דופק משולב", color: "#c084fc", icon: "⚡", rounds: 4, estMin: 40, warmup: ["marchInPlace", "armCircles", "hipHinge"], intervals: blk(["pushUp", "boxing", "bentRow", "rdl", "gluteBridge", "shoulderPress", "wallPush", "plankShoulderTap"], 45, 15), cooldown: ["chestStretch", "catCow", "hamstringStretch"] },
+  power: { id: "power", title: "HIIT כוח מאסיבי", subtitle: "עצימות גבוהה · כל הגוף", color: "#f43f5e", icon: "🦾", rounds: 5, estMin: 42, warmup: ["marchInPlace", "armCircles", "hipHinge", "birdDog"], intervals: blk(["pushUp", "renegadeRow", "rdl", "shoulderPress", "boxing", "plankShoulderTap"], 45, 15), cooldown: ["chestStretch", "catCow", "hamstringStretch"] },
   recovery: { id: "recovery", title: "התאוששות פעילה", subtitle: "ניידות · מתיחות · נשימה", color: "#34d399", icon: "🌿", rounds: 2, estMin: 18, warmup: ["marchInPlace"], intervals: blk(["catCow", "birdDog", "gluteBridge", "deadBug"], 40, 25), cooldown: ["chestStretch", "hamstringStretch", "catCow"] },
 };
 
 const WEEK: { day: string; w: string | null }[] = [
-  { day: "ראשון", w: "upper" }, { day: "שני", w: "metabolic" }, { day: "שלישי", w: "recovery" },
+  { day: "ראשון", w: "upper" }, { day: "שני", w: "power" }, { day: "שלישי", w: "recovery" },
   { day: "רביעי", w: "core" }, { day: "חמישי", w: "fullbody" }, { day: "שישי", w: "metabolic" }, { day: "שבת", w: null },
 ];
 
@@ -409,6 +416,16 @@ function Player({ w, onClose }: { w: Workout; onClose: () => void }) {
   const [finished, setFinished] = useState(false);
   const s = steps[idx];
   const total = s?.dur || 1;
+
+  // Wake Lock — מונע כיבוי מסך בזמן אימון (טלפון)
+  useEffect(() => {
+    let lock: any = null;
+    const req = async () => { try { if ("wakeLock" in navigator) lock = await (navigator as any).wakeLock.request("screen"); } catch {} };
+    req();
+    const onVis = () => { if (document.visibilityState === "visible") req(); };
+    document.addEventListener("visibilitychange", onVis);
+    return () => { document.removeEventListener("visibilitychange", onVis); try { lock?.release(); } catch {} };
+  }, []);
 
   // טיק כל שנייה
   useEffect(() => {

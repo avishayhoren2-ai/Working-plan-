@@ -58,8 +58,20 @@ $$(".tab").forEach((t) => t.addEventListener("click", () => go(t.dataset.go)));
 
 /* ---------- רינדור דף הבית ---------- */
 function iconFor(w) {
-  return { upper: "💪", metabolic: "🔥", core: "🎯", fullbody: "⚡", recovery: "🌿" }[w] || "🏋️";
+  return { upper: "💪", metabolic: "🔥", core: "🎯", fullbody: "⚡", power: "🦾", recovery: "🌿" }[w] || "🏋️";
 }
+
+/* ---------- Wake Lock: מונע כיבוי מסך בזמן אימון (טלפון) ---------- */
+let wakeLock = null;
+async function keepAwake() {
+  try { if ("wakeLock" in navigator) wakeLock = await navigator.wakeLock.request("screen"); } catch (e) {}
+}
+function releaseAwake() {
+  try { wakeLock && wakeLock.release(); wakeLock = null; } catch (e) {}
+}
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && $("#player").classList.contains("active")) keepAwake();
+});
 function renderHome() {
   const done = todayDone();
   // אימון היום
@@ -220,6 +232,7 @@ function startWorkout() {
   $("#player").classList.add("active");
   $("#p-title").textContent = w.title;
   $(".ring .prog").style.stroke = w.color;
+  keepAwake();
   loadStep();
 }
 
@@ -281,6 +294,7 @@ function updateRing() {
 
 function finishWorkout() {
   clearInterval(Player.timer);
+  releaseAwake();
   logDone(currentWorkout.id);
   $("#player-inner").innerHTML = `
     <div class="done-screen">
@@ -295,6 +309,7 @@ function finishWorkout() {
 
 function closePlayer() {
   clearInterval(Player.timer);
+  releaseAwake();
   $("#player").classList.remove("active");
   $("#player-inner").innerHTML = PLAYER_HTML;
   bindPlayerCtrls();

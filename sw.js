@@ -1,5 +1,5 @@
 /* Service Worker — FlameFit PWA (offline + התקנה למסך הבית) */
-const CACHE = "flamefit-v2";
+const CACHE = "flamefit-v3";
 const ASSETS = [
   "./",
   "./index.html",

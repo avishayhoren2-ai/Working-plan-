@@ -150,6 +150,50 @@ const EX = {
     kneeSafe: true,
   },
 
+  // —— תרגילי כוח עצימים (בטוחים לברך) ——
+  renegadeRow: {
+    name: "חתירת רנגייד (פלאנק + משיכה)",
+    cat: "פלג עליון",
+    desc: "בעמדת פלאנק על שתי משקולות, מושכים משקולת אחת לכל צד לסירוגין. תרגיל כוח אינטנסיבי לכל הגוף.",
+    cues: "אגן יציב · בלי סיבוב · ליבה נעולה · רגליים רחבות לייצוב",
+    kneeSafe: true,
+  },
+  rdl: {
+    name: "דדליפט רומני (RDL) עם משקולות",
+    cat: "פלג עליון",
+    desc: "ברכיים רכות וקבועות, הטיית אגן אחורה והורדת משקולות לאורך הרגליים, וחזרה בסחיטת ישבן. עוצמתי לשרשרת האחורית — בלי כיפוף ברך.",
+    cues: "הברך לא נעה · גב ישר · התנועה מהאגן",
+    kneeSafe: true,
+  },
+  uprightRow: {
+    name: "חתירה אנכית (Upright Row)",
+    cat: "פלג עליון",
+    desc: "משקולות לפני הגוף, מושכים כלפי מעלה עד גובה החזה כשהמרפקים מובילים. מפעיל כתפיים וגב עליון בעצימות.",
+    cues: "מרפקים מעל פרקי כף היד · תנועה מבוקרת",
+    kneeSafe: true,
+  },
+  plankShoulderTap: {
+    name: "פלאנק + נגיעת כתף",
+    cat: "ליבה",
+    desc: "בפלאנק יציב, נוגעים לסירוגין ביד בכתף הנגדית בלי לנענע את האגן. מחזק ליבה וכתפיים בעצימות.",
+    cues: "אגן יציב · רגליים רחבות לייצוב · קצב מבוקר",
+    kneeSafe: true,
+  },
+  superman: {
+    name: "סופרמן (הרמת גב)",
+    cat: "ליבה",
+    desc: "שכיבה על הבטן, מרימים ידיים ורגליים ישרות מהרצפה וסוחטים את הגב והישבן.",
+    cues: "מבט לרצפה · סחיטה בשיא · בלי כאב בגב",
+    kneeSafe: true,
+  },
+  flutterKick: {
+    name: "בעיטות פרפר (Flutter Kicks)",
+    cat: "ליבה",
+    desc: "שכיבה על הגב, רגליים ישרות מעט מעל הרצפה, בעיטות קטנות ומהירות לסירוגין. שורף בטן תחתונה.",
+    cues: "גב תחתון צמוד לרצפה · ידיים מתחת לישבן לתמיכה",
+    kneeSafe: true,
+  },
+
   // —— שחרור ומתיחות ——
   chestStretch: {
     name: "מתיחת חזה וכתפיים",
@@ -186,13 +230,13 @@ const WORKOUTS = {
     title: "HIIT פלג גוף עליון",
     subtitle: "דחיפה · משיכה · ליבה",
     color: "#A3E635",
-    rounds: 3,
-    estMin: 28,
+    rounds: 4,
+    estMin: 36,
     warmup: ["armCircles", "marchInPlace", "hipHinge"],
     intervals: block(
-      ["pushUp", "bentRow", "shoulderPress", "boxing", "plank"],
-      40,
-      20
+      ["pushUp", "bentRow", "shoulderPress", "renegadeRow", "uprightRow", "boxing", "plank"],
+      45,
+      15
     ),
     cooldown: ["chestStretch", "catCow"],
   },
@@ -201,12 +245,12 @@ const WORKOUTS = {
     title: "HIIT מטבולי לשריפה",
     subtitle: "דופק גבוה · עומס נמוך על הברך",
     color: "#FF6B35",
-    rounds: 4,
-    estMin: 26,
+    rounds: 5,
+    estMin: 32,
     warmup: ["marchInPlace", "armCircles", "hipHinge"],
     intervals: block(
-      ["boxing", "wallPush", "standingPunchKnee", "fastFeetSeated"],
-      30,
+      ["boxing", "wallPush", "standingPunchKnee", "fastFeetSeated", "standingOblique"],
+      35,
       15
     ),
     cooldown: ["chestStretch", "hamstringStretch"],
@@ -216,13 +260,13 @@ const WORKOUTS = {
     title: "HIIT ליבה ויציבה",
     subtitle: "בטן · גב · ישבן",
     color: "#22D3EE",
-    rounds: 3,
-    estMin: 24,
+    rounds: 4,
+    estMin: 30,
     warmup: ["catCow", "birdDog", "marchInPlace"],
     intervals: block(
-      ["plank", "deadBug", "gluteBridge", "sidePlank", "standingOblique"],
-      35,
-      20
+      ["plank", "deadBug", "gluteBridge", "plankShoulderTap", "flutterKick", "superman", "sidePlank"],
+      40,
+      15
     ),
     cooldown: ["catCow", "hamstringStretch"],
   },
@@ -231,13 +275,28 @@ const WORKOUTS = {
     title: "HIIT גוף מלא",
     subtitle: "כוח + דופק משולב",
     color: "#C084FC",
-    rounds: 3,
-    estMin: 30,
+    rounds: 4,
+    estMin: 40,
     warmup: ["marchInPlace", "armCircles", "hipHinge"],
     intervals: block(
-      ["pushUp", "boxing", "bentRow", "gluteBridge", "shoulderPress", "wallPush"],
-      40,
-      20
+      ["pushUp", "boxing", "bentRow", "rdl", "gluteBridge", "shoulderPress", "wallPush", "plankShoulderTap"],
+      45,
+      15
+    ),
+    cooldown: ["chestStretch", "catCow", "hamstringStretch"],
+  },
+  power: {
+    id: "power",
+    title: "HIIT כוח מאסיבי",
+    subtitle: "עצימות גבוהה · כל הגוף",
+    color: "#F43F5E",
+    rounds: 5,
+    estMin: 42,
+    warmup: ["marchInPlace", "armCircles", "hipHinge", "birdDog"],
+    intervals: block(
+      ["pushUp", "renegadeRow", "rdl", "shoulderPress", "boxing", "plankShoulderTap"],
+      45,
+      15
     ),
     cooldown: ["chestStretch", "catCow", "hamstringStretch"],
   },
@@ -257,7 +316,7 @@ const WORKOUTS = {
 /* תכנית שבועית (6 ימים + מנוחה) */
 const WEEK = [
   { day: "ראשון", w: "upper", label: "פלג עליון" },
-  { day: "שני", w: "metabolic", label: "מטבולי" },
+  { day: "שני", w: "power", label: "כוח מאסיבי" },
   { day: "שלישי", w: "recovery", label: "התאוששות" },
   { day: "רביעי", w: "core", label: "ליבה" },
   { day: "חמישי", w: "fullbody", label: "גוף מלא" },
