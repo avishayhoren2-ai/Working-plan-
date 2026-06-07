@@ -1,5 +1,5 @@
 /* FlameFit Service Worker — מאפשר התקנה למסך הבית + עבודה לא-מקוונת */
-const CACHE = "flamefit-v1";
+const CACHE = "flamefit-v2";
 
 self.addEventListener("install", (e) => {
   self.skipWaiting();
@@ -13,14 +13,26 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
+  const req = e.request;
+  if (req.method !== "GET") return;
+
+  // ניווטים: רשת-תחילה, ובלי להחזיר תגובה עם הפניה (מונע שגיאת Safari)
+  if (req.mode === "navigate") {
+    e.respondWith(
+      fetch(req)
+        .then((res) => (res && res.redirected ? new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers }) : res))
+        .catch(() => caches.match("/index.html").then((r) => r || caches.match("/")))
+    );
+    return;
+  }
+
   e.respondWith(
-    caches.match(e.request).then((cached) => {
-      const net = fetch(e.request)
+    caches.match(req).then((cached) => {
+      const net = fetch(req)
         .then((res) => {
-          if (res && res.status === 200 && res.type === "basic") {
+          if (res && res.status === 200 && res.type === "basic" && !res.redirected) {
             const copy = res.clone();
-            caches.open(CACHE).then((c) => c.put(e.request, copy));
+            caches.open(CACHE).then((c) => c.put(req, copy));
           }
           return res;
         })

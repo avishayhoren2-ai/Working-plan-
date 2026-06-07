@@ -1,5 +1,5 @@
 /* Service Worker — FlameFit PWA (offline + התקנה למסך הבית) */
-const CACHE = "flamefit-v3";
+const CACHE = "flamefit-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -28,11 +28,29 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const { request } = e;
   if (request.method !== "GET") return;
+
+  // ניווטים (טעינת הדף): רשת-תחילה, ולעולם לא להחזיר תגובה עם הפניה (redirect)
+  // — מונע את שגיאת Safari "Response served by service worker has redirections".
+  if (request.mode === "navigate") {
+    e.respondWith(
+      fetch(request)
+        .then((res) => {
+          // אם התקבלה הפניה — בונים מחדש תגובה "נקייה" בלי דגל redirected
+          if (res && res.redirected) {
+            return new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers });
+          }
+          return res;
+        })
+        .catch(() => caches.match("./index.html").then((r) => r || caches.match("./")))
+    );
+    return;
+  }
+
   e.respondWith(
     caches.match(request).then((cached) => {
       const fetchPromise = fetch(request)
         .then((res) => {
-          if (res && res.status === 200 && res.type === "basic") {
+          if (res && res.status === 200 && res.type === "basic" && !res.redirected) {
             const copy = res.clone();
             caches.open(CACHE).then((c) => c.put(request, copy));
           }
